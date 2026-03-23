@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>View Elder Data</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="global.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      color: #333;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 25px 35px;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .header-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 24px;
+    }
+
+    .header-title h1 {
+      font-size: 1.5em;
+      font-weight: 600;
+      color: #2d3748;
+    }
+
+    .back-btn {
+      padding: 10px 24px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .back-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    /* Elder Profile Card */
+    .elder-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 35px;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 25px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .profile-avatar {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 36px;
+      flex-shrink: 0;
+    }
+
+    .profile-title h2 {
+      font-size: 1.8em;
+      font-weight: 700;
+      color: #2d3748;
+      margin-bottom: 5px;
+    }
+
+    .profile-subtitle {
+      color: #718096;
+      font-size: 0.95em;
+    }
+
+    .elder-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .detail-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 15px;
+      background: #f7fafc;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .detail-item:hover {
+      background: #edf2f7;
+      transform: translateX(5px);
+    }
+
+    .detail-icon {
+      width: 45px;
+      height: 45px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .detail-item:nth-child(1) .detail-icon {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .detail-item:nth-child(2) .detail-icon {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    }
+
+    .detail-item:nth-child(3) .detail-icon {
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+
+    .detail-content {
+      flex: 1;
+    }
+
+    .detail-label {
+      font-size: 0.85em;
+      color: #718096;
+      font-weight: 500;
+      margin-bottom: 3px;
+    }
+
+    .detail-value {
+      font-size: 1.1em;
+      font-weight: 600;
+      color: #2d3748;
+    }
+
+    /* Section Cards */
+    .section {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 35px;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .section-icon {
+      width: 45px;
+      height: 45px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 20px;
+    }
+
+    .section:nth-of-type(2) .section-icon {
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+
+    .section:nth-of-type(3) .section-icon {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    }
+
+    .section:nth-of-type(4) .section-icon {
+      background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    }
+
+    .section-header h3 {
+      font-size: 1.4em;
+      font-weight: 600;
+      color: #2d3748;
+    }
+
+    /* Data Lists */
+    .data-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .data-item {
+      background: #f7fafc;
+      padding: 15px 18px;
+      border-radius: 10px;
+      border-left: 4px solid transparent;
+      transition: all 0.3s ease;
+      font-size: 0.95em;
+      line-height: 1.6;
+    }
+
+    .section:nth-of-type(2) .data-item {
+      border-left-color: #00f2fe;
+    }
+
+    .section:nth-of-type(3) .data-item {
+      border-left-color: #f5576c;
+    }
+
+    .section:nth-of-type(4) .data-item {
+      border-left-color: #38f9d7;
+    }
+
+    .data-item:hover {
+      background: #edf2f7;
+      transform: translateX(5px);
+    }
+
+    .data-item strong {
+      color: #2d3748;
+      font-weight: 600;
+    }
+
+    .data-timestamp {
+      color: #718096;
+      font-size: 0.85em;
+      margin-top: 5px;
+      display: block;
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 30px;
+      color: #718096;
+    }
+
+    .empty-state i {
+      font-size: 36px;
+      margin-bottom: 10px;
+      opacity: 0.5;
+    }
+
+    .empty-state p {
+      font-size: 0.95em;
+    }
+
+    /* Loading Animation */
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #667eea;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      body {
+        padding: 15px;
+      }
+
+      .header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .elder-card, .section {
+        padding: 25px;
+      }
+
+      .profile-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .elder-details {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-left">
+        <div class="header-icon">
+          <i class="fas fa-user-md"></i>
+        </div>
+        <div class="header-title">
+          <h1>Elder Care Dashboard</h1>
+        </div>
+      </div>
+      <a href="javascript:history.back()" class="back-btn">
+        <i class="fas fa-arrow-left"></i>
+        Back to Dashboard
+      </a>
+    </div>
+
+    <!-- Elder Profile Card -->
+    <div class="elder-card">
+      <div class="profile-header">
+        <div class="profile-avatar">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <div class="profile-title">
+          <h2>Elder Profile</h2>
+          <p class="profile-subtitle">Complete health and care information</p>
+        </div>
+      </div>
+
+      <div class="elder-details">
+        <div class="detail-item">
+          <div class="detail-icon">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="detail-content">
+            <div class="detail-label">Full Name</div>
+            <div class="detail-value" id="elder-name">Loading...</div>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-icon">
+            <i class="fas fa-calendar"></i>
+          </div>
+          <div class="detail-content">
+            <div class="detail-label">Age</div>
+            <div class="detail-value" id="elder-age">Loading...</div>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <div class="detail-icon">
+            <i class="fas fa-phone"></i>
+          </div>
+          <div class="detail-content">
+            <div class="detail-label">Contact Number</div>
+            <div class="detail-value" id="elder-contact">Loading...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vitals Section -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">
+          <i class="fas fa-heartbeat"></i>
+        </div>
+        <h3>Vital Signs</h3>
+      </div>
+      <ul id="vitals-list" class="data-list">
+        <li class="empty-state">
+          <div class="loading"></div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Medications Section -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">
+          <i class="fas fa-pills"></i>
+        </div>
+        <h3>Medications</h3>
+      </div>
+      <ul id="medications-list" class="data-list">
+        <li class="empty-state">
+          <div class="loading"></div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Notes Section -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-icon">
+          <i class="fas fa-sticky-note"></i>
+        </div>
+        <h3>Caregiver Notes</h3>
+      </div>
+      <ul id="notes-list" class="data-list">
+        <li class="empty-state">
+          <div class="loading"></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- YOUR EXISTING SCRIPTS - DO NOT MODIFY -->
+  <script>
+let elderId = null;
+
+fetch('../backend/get_elders.php')
+  .then(res => res.json())
+  .then(data => {
+    if (data.length > 0) {
+      const elder = data[0];
+      elderId = elder.id;
+
+      document.getElementById('elder-name').textContent = elder.first_name + ' ' + elder.last_name;
+      document.getElementById('elder-age').textContent = elder.age;
+      document.getElementById('elder-contact').textContent = elder.contact;
+
+      fetch('../backend/get_elder_vitals.php')
+        .then(res => res.json())
+        .then(data => {
+          const list = document.getElementById('vitals-list');
+          const filtered = data.filter(v => v.elder_id === elderId);
+          
+          if (filtered.length === 0) {
+            list.innerHTML = `
+              <li class="empty-state">
+                <i class="fas fa-chart-line"></i>
+                <p>No vitals recorded.</p>
+              </li>
+            `;
+          } else {
+            list.innerHTML = '';
+            filtered.forEach(v => {
+              const item = document.createElement('li');
+              item.className = 'data-item';
+              item.innerHTML = `
+                <strong>BP:</strong> ${v.bp}, <strong>Sugar:</strong> ${v.sugar}, <strong>Heart Rate:</strong> ${v.heart_rate}
+                <span class="data-timestamp">📅 ${v.recorded_at}</span>
+              `;
+              list.appendChild(item);
+            });
+          }
+        });
+
+      fetch('../backend/get_elder_medications.php')
+        .then(res => res.json())
+        .then(data => {
+          const list = document.getElementById('medications-list');
+          const filtered = data.filter(m => m.elder_id === elderId);
+          
+          if (filtered.length === 0) {
+            list.innerHTML = `
+              <li class="empty-state">
+                <i class="fas fa-prescription-bottle"></i>
+                <p>No medications found.</p>
+              </li>
+            `;
+          } else {
+            list.innerHTML = '';
+            filtered.forEach(m => {
+              const item = document.createElement('li');
+              item.className = 'data-item';
+              item.innerHTML = `
+                <strong>${m.name}</strong> at ${m.time}
+                <span class="data-timestamp">Status: ${m.status}</span>
+              `;
+              list.appendChild(item);
+            });
+          }
+        });
+
+      fetch('../backend/get_notes.php')
+        .then(res => res.json())
+        .then(data => {
+          const list = document.getElementById('notes-list');
+          const filtered = data.filter(n => n.elder_id === elderId);
+          
+          if (filtered.length === 0) {
+            list.innerHTML = `
+              <li class="empty-state">
+                <i class="fas fa-clipboard"></i>
+                <p>No notes available.</p>
+              </li>
+            `;
+          } else {
+            list.innerHTML = '';
+            filtered.forEach(n => {
+              const item = document.createElement('li');
+              item.className = 'data-item';
+              item.innerHTML = `
+                ${n.note}
+                <span class="data-timestamp">📝 ${n.created_at}</span>
+              `;
+              list.appendChild(item);
+            });
+          }
+        });
+    }
+  });
+</script>
+
+</body>
+</html>

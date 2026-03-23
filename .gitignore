@@ -1,0 +1,26 @@
+# 🔒 Sensitive files
+backend/db.php
+config.php
+config_api.php
+
+# 🗄 Database files
+*.sql
+*.db
+
+# 🧠 IDE files
+.idea/
+.vscode/
+
+# 💻 System files
+.DS_Store
+Thumbs.db
+
+# 📜 Logs
+*.log
+
+# ⚙️ Server config
+php.ini
+
+# 🔁 Temp files
+*.tmp
+*.bak

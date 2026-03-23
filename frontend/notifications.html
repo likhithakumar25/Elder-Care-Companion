@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Notifications - Elder Care Companion</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/style.css" />
+</head>
+<body class="bg-light">
+  <div class="container mt-5">
+    <h3 class="mb-4">Notifications & Reminders</h3>
+
+    <div class="card p-4 shadow-sm mb-4">
+      <h5>Medication Reminders</h5>
+      <ul id="medNotify" class="list-group"></ul>
+    </div>
+
+    <div class="card p-4 shadow-sm">
+      <h5>Appointment Reminders</h5>
+      <ul id="apptNotify" class="list-group"></ul>
+    </div>
+  </div>
+
+  <script>
+    async function fetchMedications() {
+      const res = await fetch('../backend/get_medications.php');
+      const meds = await res.json();
+      const list = document.getElementById('medNotify');
+      list.innerHTML = '';
+      meds.forEach(med => {
+        if (med.status === 'pending') {
+          const item = document.createElement('li');
+          item.className = 'list-group-item';
+          item.textContent = `Take ${med.name} at ${med.time}`;
+          list.appendChild(item);
+        }
+      });
+    }
+
+    async function fetchAppointments() {
+      const res = await fetch('../backend/get_appointments.php');
+      const appts = await res.json();
+      const list = document.getElementById('apptNotify');
+      list.innerHTML = '';
+      appts.forEach(appt => {
+        const item = document.createElement('li');
+        item.className = 'list-group-item';
+        item.textContent = `Upcoming: ${appt.title} on ${appt.date} at ${appt.time}`;
+        list.appendChild(item);
+      });
+    }
+
+    fetchMedications();
+    fetchAppointments();
+  </script>
+  <script src="../assets/style.js"></script>
+</body>
+</html>
